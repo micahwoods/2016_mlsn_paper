@@ -12,16 +12,9 @@ mlsn.normal <- function(x) {
   return(round(v1, 0))
 }
 
-# omcec function calculates om cec for given pH (x) and om (y)
-omcec <- function(x, y) {
-  cec <- (-311 + 268 * x) * (y / 100)
-  return(round(cec, 1))
-}
-
 # generates of row of summary data in a table for a given vector
 rowData <- function(x) {
-  ano <- c(length(na.omit(x)), 
-           mlsn(x), 
+  ano <- c(mlsn(x), 
            min(x, na.rm = TRUE),
            median(x, na.rm = TRUE),
            max(x, na.rm = TRUE))
@@ -37,5 +30,15 @@ shapeScale <- function(x) {
   shape <- z[2]
   ano <- c(scale, shape, new.mlsn)
   return(ano)
+}
+
+# SI function for the log-logistic distribution
+# x is the test result, y is the MLSN data vector
+
+siFisk <- function(x, y) {
+  fit.y <- vglm(y ~ 1, fisk)
+  z <- Coef(fit.y)
+  si <- pfisk(x, z[1], z[2])
+  return(si)
 }
   
