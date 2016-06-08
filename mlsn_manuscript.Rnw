@@ -196,7 +196,7 @@ print(shape.table, include.rownames = FALSE,
 
 With these parameters in Table~\ref{tab:shapetable}, and the mean and standard deviation of the calcium data, one can compare Mehlich 3 soil test results for any turfgrass sample, comparing them to the data used to generate the MLSN guidelines. We call this the sustainability index (SI), and it is the cumulative distribution function for any value of $X$. As an example, if one had test results showing Ca at 800 mg kg\textsuperscript{-1}, the SI would be \Sexpr{formatC(pnorm(800, mean(calcium), sd(calcium)), digits = 2, format = "f")}. 
 
-The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} would be, calculating the cumulative distribution function for $P(117 \\leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}, \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. The MLSN guideline levels are at an SI of 0.1. 
+The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by calculating the cumulative distribution function for $P(117 \leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}. The MLSN guideline levels are at an SI of 0.1. 
 
 Expressing these data in terms of probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
 
