@@ -19,7 +19,8 @@ sim.data <- data.frame(y = rfisk(n = length(na.omit(zed)),
 plot(ecdf(zed), verticals=TRUE, do.p=FALSE,
      col.h = "#d95f02",
      col.v = "#d95f02", 
-     main = NULL, xlab = bquote(.(xLabInput)))
+     main = NULL, xlab = bquote(paste(.(xLabInput), ~kg^{-1}*")")),
+     cex.lab = 1.5, cex.axis = 1.5, cex.main = 1.5, cex.sub = 1.5)
 
 lines(ecdf(sim.data$y), verticals=TRUE,
       col.h = "black",
@@ -41,7 +42,8 @@ normalEcdfPlot <- function(zed, xLabInput) {
   plot(ecdf(zed), verticals=TRUE, do.p=FALSE,
        col.h = "#d95f02",
        col.v = "#d95f02",
-       main = NULL, xlab = bquote(.(xLabInput)))
+       main = NULL, xlab = bquote(paste(.(xLabInput), ~kg^{-1}*")")),
+       cex.lab = 1.5, cex.axis = 1.5, cex.main = 1.5, cex.sub = 1.5)
   
   lines(ecdf(sim.data$y), verticals=TRUE,
         col.h = "black",
@@ -51,11 +53,11 @@ normalEcdfPlot <- function(zed, xLabInput) {
 
 par(mfrow=c(3,2))
 par(mar=c(5.1,4.1,4.1,2.1))
-ecdfPlot(potassium, "K (ppm)")
-ecdfPlot(phosphorus, "P (ppm)")
-normalEcdfPlot(calcium, "Ca (ppm)")
-ecdfPlot(magnesium, "Mg (ppm)")
-ecdfPlot(sulfur, "S (ppm)")
+ecdfPlot(potassium, "K (mg")
+ecdfPlot(phosphorus, "P (mg")
+normalEcdfPlot(calcium, "Ca (mg")
+ecdfPlot(magnesium, "Mg (mg")
+ecdfPlot(sulfur, "S (mg")
 
 plot(x = 0, y = 0, type='n', bty='n', xaxt='n', yaxt='n',
      xlab = "", ylab = "")
@@ -66,7 +68,8 @@ legend("center", c("MLSN data", "model"),
        col = c("#d95f02", "black"),
        lty = 1,
        lwd = 1,
-       bty = "n")
+       bty = "n",
+       cex = 1.5)
 
 
 
