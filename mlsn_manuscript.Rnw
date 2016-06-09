@@ -75,7 +75,7 @@ source("r/read_data_and_calculate_mlsn.R")
 
 To identify the minimum guideline levels, we analyzed Mehlich 3 soil test data from \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil test results, drawn from a larger set of \Sexpr{prettyNum(nPace + nAtc, big.mark = ",")} samples collected from professionally-managed and good-performing turf. This paper explains how the MLSN guidelines were identified and shows that they are applicable as a general guideline for turfgrass soil test interpretation.
 
-\section*{Methods}
+\section*{Materials \& Methods}
 
 We gathered data from soil nutrient analyses of professionally-managed turf, primarily from golf courses but also from athletic fields and lawns. The data are from soil samples collected to a 10 cm depth and submitted to PACE Turf from October 1991 to August 2014 (n = \Sexpr{prettyNum(nPace, big.mark = ",")}) and submitted to the Asian Turfgrass Center (ATC) from March 2007 to July 2014 (n = \Sexpr{prettyNum(nAtc, big.mark = ",")}). These data are available at {\small\url{https://github.com/micahwoods/2016_mlsn_paper/tree/master/data}}. 
 
@@ -89,51 +89,23 @@ We then selected only those samples with a cation exchange capacity (CEC) by sum
 
 In \cite{clarifying-3}, levels of K (117 mg kg\textsuperscript{-1}), Ca (751 mg kg\textsuperscript{-1}), and Mg (121 mg kg\textsuperscript{-1}) are given as the bottom of the high range. Adding more of a particular nutrient, when the soil is at or above those levels, is not expected to produce a turfgrass response \citep{clarifying-3}. A soil with K at 117 mg kg\textsuperscript{-1}, Ca at 751 mg kg\textsuperscript{-1}, and Mg at 121 mg kg\textsuperscript{-1}, has a CEC of 50 mmol\textsubscript{c} kg\textsuperscript{-1}. By selecting samples with CEC less than or equal to 60 mmol\textsubscript{c} kg\textsuperscript{-1}, we identified samples in which turf was performing well but contained nutrients in a range at which supplemental K, P, Ca, Mg, or S would typically be recommended. 
 
-After filtering the full dataset, we were left with \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil samples of moderate pH and nutrient content in the range where fertilizer would be typically be recommended using conventional guidelines. For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a log-logistic distribution fits the K, P, Mg, and S data to a tolerable degree, and a normal distribution to the Ca data, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale and shape parameters. The MLSN level was selected as the value at which the probability of a sample ($X$) drawn from this distribution having a value less than or equal to the MLSN guideline is 0.1. That is, the MLSN guideline is the value of $x$ where $P(X \leq x) = 0.1$. The scripts used to generate the MLSN guidelines are available at {\small\url{https://github.com/micahwoods/2016_mlsn_paper/tree/master/r}}.
+After filtering the full dataset, we were left with \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil samples -- the MLSN data. These were of moderate pH and had nutrient content in the range where fertilizer would typically be recommended using conventional guidelines. 
+
+For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a 2 parameter log-logistic (Fisk) distribution fits the K, P, Mg, and S data to a tolerable degree, and a normal distribution to the Ca data, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale and shape parameters. The MLSN guideline was selected as the value at which the probability of a random variable ($X$) drawn from this distribution having a value less than or equal to the MLSN guideline is 0.1. That is, the MLSN guideline is the value of $x$ where $P(X \leq x) = 0.1$. The scripts used to generate the MLSN guidelines are available at {\small\url{https://github.com/micahwoods/2016_mlsn_paper/tree/master/r}}.
 
 \section*{Results}
 
-Table~\ref{tab:sumtable} summarizes these data. These samples were all from good-performing turf, yet the median value for each element is lower than the conventional guideline for that element in \cite{clarifying-3}. 
+Table~\ref{tab:sumtable} summarizes the combined data -- the MLSN data -- from PACE Turf and ATC (n = \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")}) after filtering to include only the samples with pH $\geq$ 5.5 and $\leq$ 8.5 and CEC $\leq$ 60 mmol\textsubscript{c} kg\textsuperscript{-1}. These samples were all from good-performing turf, yet the median value for each element is lower than the conventional guideline for that element in \cite{clarifying-3}. 
 
 <<sumtable, results='asis', echo=FALSE>>=
 
-kRow <- rowData(potassium)
-pRow <- rowData(phosphorus)
-caRow <- c(mlsn.normal(calcium),
-           min(calcium, na.rm = TRUE),
-           median(calcium, na.rm = TRUE),
-           max(calcium, na.rm = TRUE))
-mgRow <- rowData(magnesium)
-sRow <- rowData(sulfur)
-
-sum.table <- rbind(kRow, pRow, caRow,
-                   mgRow, sRow)
-
-carrow <- c(117, 55, 751, 121, 41)
-
-elements <- c("K", "P", "Ca", "Mg", "S")
-
-sum.table <- cbind.data.frame(elements, sum.table, carrow)
-
-colnames(sum.table) <- c("Element", "MLSN", "minimum",
-                         "median", "maximum mg kg\\textsuperscript{-1}", "Conventional guideline")
-
-sum.table <- sum.table[ , c(1, 3, 4, 5, 2, 6)]
-
-options(xtable.comment = FALSE)
-options(xtable.booktabs = TRUE)
-sum.table <- xtable(sum.table, caption = "Summary of MLSN data, with conventional guidelines from \\cite{clarifying-3} included for reference.", 
-                    label = "tab:sumtable",
-                    digits = c(0, 0, 0, 0, 0, 0, 0),
-                    align = c("l", "l", "l",
-                              "l", "p{2cm}", "l", "l"))
+source("r/table1.R")
 
 print(sum.table, include.rownames = FALSE, sanitize.text.function = identity,
       caption.placement = "top")
-
 @
 
-Figure~\ref{fig:histograms} shows histograms with overlying curves for the density, the normal distribution, and the fisk (log-logistic) distribution. For K, P, Mg, and S, the fisk distribution provides a good approximation of the data. For Ca, the normal distribution was closer. 
+Figure~\ref{fig:histograms} shows histograms with overlying curves for the density, the normal distribution, and the log-logistic distribution. For K, P, Mg, and S, the log-logistic distribution provides a good approximation of the data. For Ca, the normal distribution was a better fit. These MLSN data are representative of soil nutrient levels across a wide range of turfgrass sites, with soils that have a relatively low nutrient holding capacity, and at which the turfgrass was performing well at the time the sample was collected.
 
 \begin{figure}
 <<fig1, results='asis', echo=FALSE, warning=FALSE>>=
@@ -146,8 +118,19 @@ source("r/figure1.R")
 \label{fig:histograms}
 \end{figure}
 
-We looked at the estimated cumulative distribution function (ECDF) of our selected models and compared that with the ECDF of the data. These are plotted in Figure~\ref{fig:ecdf}. 
+Table~\ref{tab:shapetable} shows the log-logistic model parameters and the $P(X \leq x) = 0.1$ level, which we identify as the MLSN guideline level. These scale and shape parameters for the log-logistic distribution can be used to find the value for any quantile. For the Ca data, we worked with a normal distribution having a mean of \Sexpr{formatC(mean(calcium), digits = 2, format = "f")} and a standard deviation of \Sexpr{formatC(sd(calcium), digits = 2, format = "f")}. Using the quantile function for a normal distribution with those parameters, the value of $x$ where $P(X \leq x) = 0.1$ is \Sexpr{formatC(qnorm(0.1, mean(calcium), sd(calcium)), digits = 0, format = "f")} mg kg\textsuperscript{-1}.
 
+<<scale_shape_table,results='asis',echo=FALSE>>=
+
+source("r/table2.R")
+
+print(shape.table, include.rownames = FALSE,
+      sanitize.text.function = function(x){x},
+      caption.placement = "top")
+
+@
+
+Figure~\ref{fig:ecdf} shows the estimated cumulative distribution function (ECDF) of the MLSN data and of simulated data generated from the fitted models. Simulated data for K, P, Mg, and S were generated using the scale and shape parameters for the log-logistic distribution from Table~\ref{tab:shapetable}. The simulated data for Ca were based on the mean and standard deviation of the Ca data. For each element, we then had a vector of soil test results from the MLSN data, and a vector of simulated data of the same length, from which we plotted the ECDF. 
 
 \begin{figure}
 <<fig2, results='asis', echo=FALSE, warning=FALSE>>=
@@ -156,78 +139,32 @@ source("r/figure2.R")
 
 @
 
-\caption{ECDF for the MLSN data and for simulated data based on the Fisk distribution for K, P, Mg, and S; and based on the normal distribution for Ca.}
+\caption{ECDF for the MLSN data and for simulated data based on the log-logistic distribution for K, P, Mg, and S; and based on the normal distribution for Ca.}
 \label{fig:ecdf}
 \end{figure}
 
-% text must show how to use the parameters and give some R code to generate
+With these parameters in Table~\ref{tab:shapetable}, and the mean and standard deviation of the Ca data, one can compare Mehlich 3 soil test results for any turfgrass sample to the data used to generate the MLSN guidelines. We call this the sustainability index (SI), and it is the cumulative distribution function for any value of $X$. As an example, if one had test results showing Ca at 800 mg kg\textsuperscript{-1}, the SI would be \Sexpr{formatC(pnorm(800, mean(calcium), sd(calcium)), digits = 2, format = "f")}. 
 
-Table~\ref{tab:shapetable} shows the log-logistic model parameters and the $P(X \leq x) = 0.1$ level, which we identify as the MLSN guideline level. These scale and shape parameters for the log-logistic distribution can be used to find the value for any quantile. For the Ca data, we worked with a normal distribution having a mean of \Sexpr{formatC(mean(calcium), digits = 2, format = "f")} and a standard deviation of \Sexpr{formatC(sd(calcium), digits = 2, format = "f")}. Using the quantile function for a normal distribution with those parameters, the value of $X$ where $P(X \leq x) = 0.1$ is \Sexpr{formatC(qnorm(0.1, mean(calcium), sd(calcium)), digits = 0, format = "f")} mg kg\textsuperscript{-1}.
-
-<<scale_shape_table,results='asis',echo=FALSE>>=
-# this will give the table with scale and shape parameters
-
-kShape <- shapeScale(potassium)
-pShape <- shapeScale(phosphorus)
-mgShape <- shapeScale(magnesium)
-sShape <- shapeScale(sulfur)
-
-shape.table <- rbind(kShape, pShape,
-                     mgShape, sShape)
-
-elements <- c("K", "P", "Mg", "S")
-
-shape.table <- cbind.data.frame(elements, shape.table)
-
-colnames(shape.table) <- c("Element", "Scale", "Shape", "$P(X \\leq x) = 0.1$ mg kg\\textsuperscript{-1}")
-
-options(xtable.comment = FALSE)
-options(xtable.booktabs = TRUE)
-shape.table <- xtable(shape.table, caption = "Parameters of the log-logistic distributions for K, P, Mg, and S.", 
-                    label = "tab:shapetable",
-                    digits = c(0, 0, 2, 2, 0),
-                    align = c("l", "l", "l", "l", "p{3cm}"))
-
-print(shape.table, include.rownames = FALSE,
-      sanitize.text.function = function(x){x},
-      caption.placement = "top")
-
-@
-
-With these parameters in Table~\ref{tab:shapetable}, and the mean and standard deviation of the calcium data, one can compare Mehlich 3 soil test results for any turfgrass sample, comparing them to the data used to generate the MLSN guidelines. We call this the sustainability index (SI), and it is the cumulative distribution function for any value of $X$. As an example, if one had test results showing Ca at 800 mg kg\textsuperscript{-1}, the SI would be \Sexpr{formatC(pnorm(800, mean(calcium), sd(calcium)), digits = 2, format = "f")}. 
-
-The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by calculating the cumulative distribution function for $P(117 \leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}. The MLSN guideline levels are at an SI of 0.1. 
-
-Expressing these data in terms of probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
+The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by calculating the cumulative distribution function for $P(117 \leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}. The MLSN guideline levels are at an SI of 0.1, and the SI of all turfgrass soil test results will be in the range of 0 $\leq$ SI $\leq$ 1. Expressing these data in terms of probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
 
 \section*{Discussion}
 
- this might be confusing, but we can explain it like this. the key thing is that at the time the samples were collected there was enough.
+We summarized, in the form of probability distributions, the soil test results from a large dataset of samples collected from good-performing turf. These reference distributions of test results from good-performing turf can be used for comparison to turfgrass soil samples from any location. For each element, the MLSN guideline level were selected from the modeled probability distribution as the value $x$ at which a random sample $X$ drawn from the distribution has a value of $P(X \leq x) = 0.1$. These MLSN guideline levels are, for K, P, Ca, Mg, and S respectively: 37, 21, 333, 47, and 7 mg kg\textsuperscript{-1}. 
 
- point out yet to be tested but in agreement with a number of results, Woods, Petrovic, St. Johns, Snyder,  Rowland, etc
+All the samples in the MLSN data were producing good turf at the time the sample was collected. It follows that the quantity of an element in the soil at the instant the sample was collected was sufficient to produce good turf. Soil nutrient levels decrease as grass grows and uses nutrients, so the recommended quantity of an element to apply as fertilizer, calculated so that the soil will stay above the MLSN guidelines, incorporates the expected grass use of that element over a defined duration \citep{gcm-mlsn-2014}. This results in a guideline level that is lower than the conventional guidelines of \cite{clarifying-3}, but results in fertilizer recommendations to supply elements at levels comfortably above those at which deficiency symptoms are observed \citep{Kreuser:2012vn, Raley2013, schmid2016, woods-dissertation}. 
 
-perhaps note also that the old recs are based on soil type diff (more sand now) and on different N rates (1970s vs today)
+These guidelines were not tested against improvements in turf performance according to a traditional calibration study. In short, there is no response variable! Because these data are all from sites producing good-performing turf at the time the sample was collected, that good-performing turf is, in a sense, the response variable. We selected a minimum guideline at the $P(X \leq x) = 0.1$ level, and then make fertilizer recommendations to stay above that level. In this way, the MLSN guidelines and the subsequent recommendations are a conservative way to recommend fertilizer for turfgrass, ensuring the quantities supplied will always be more than the lowest levels found in good-performing turf. 
 
-let this all be about telling the story of how we generated the MLSN guidelines
+Our assumption underlying this work is that if the quantity of an element in soils with low nutrient holding capacity is sufficient to produce good turf, then the same quantity of that element in soils with a high nutrient holding capacity will also be sufficient to produce good turf. If this assumption is incorrect, then the guidelines would be suitable only for low nutrient holding soils, but would be too low for soils that have a high quantity of nutrients. To some extent, this is addressed in the preliminary results of the Global Soil Survey \citep{Woods2014}, which found that samples from explicitly good-performing turf from multiple sites in Asia, North America, and Europe, had nutrient levels similar or lower than those in the MLSN data. 
 
- it is in a large way taking a dataset and making a model of it
+The MLSN guidelines correspond well with recent research, giving a conservative minimum guideline that is lower than conventional guideline levels, but higher than the real critical value seems to be.
 
+\section*{Conclusions}
 
-In the application of the MLSN guidelines, these are given as the minimum level. Fertilizer recommendations are made to ensure the soil concentration of elements remains at or above the guideline level, as described in \cite{gcm-mlsn-2014}
+We propose the MLSN guidelines as a single soil test value to stay above for K, P, Ca, Mg, and S, applicable for all soils and all grasses. The quantity of an element required as fertilizer to stay above the MLSN guideline will be dependent on the grass use of the element, which is site specific.
 
-Another concern with this work is that the 0.1 level we select as the MLSN guideline level is too low. Even though the reason is judgement -- arbitrariness -- we are working with a dataset of soils in which good-performing turf is we make various assumptions. high performance turf and probably tested annually. Thus we can run low and still have high turf performance. We assume that the nutrients applied have some relation to the nutrients in the soil. Cite Beegle on soil test interpretation.
+The advantages of this approach are extensive. The guidelines can be updated with ease as new data become available. A single soil nutrient level is identified for each element -- a minimum level that we want to stay above. Thus this approach can answer the simple question, do we need to add fertilizer, or do we not need to add fertilizer? Also, we can classify soils by the SI, giving a comparison of the current soil nutrient level to the MLSN data. This MLSN approach corresponds well to the large body of turfgrass nutrition research and we look forward to rigorous testing and refinement of these values in field research. 
 
-The main drawback is this is not tested against improvements in turf performance according to a traditional calibration study. With turfgrass, a different approach seems reasonable. Nitrogen is the controlling factor for yield. \cite{kussow-n-demand} 
-
-One thing we can do is use these numbers as a starting point -- this is something that is easy to test -- it either works, or it doesn't. The numbers from MLSN correspond well to recent research, giving a conservative number that is lower than conventional guideline levels, but higher than one the real critical value seems to be.
-
-Another limitation is Mehlich 3; these values are only relevant to Mehlich 3. One can of course put together conversion equations. We have also shared data for Bray and some Olsen P.
-
-The advantages of this approach are extensive. We can update the guidelines with ease as new data are added. In fact, the guidelines are designed to adjust automatically, as new information becomes available.We identify a single soil nutrient level that we want to stay above. That is, we answer the simple question, do we need to add fertilizer, or do we not need to add fertilizer. Finally, we can classify soils by what we term the sustainability index, giving a comparison of the current soil nutrient level to the MLSN guideline.
-
-\section*{Conclusion}
-
-We propose this as universal for turfgrass, one that can be updated as more data are obtained, and that simplifies to a single value, rather than a collection of ranges. This MLSN approach corresponds well to the large body of turfgrass nutrition research and we look forward to future testing and refinement of these values in field research. 
 \bibliography{/home/myuser/Documents/reports/citation.bib}
 \bibliographystyle{plainnat} 
 
