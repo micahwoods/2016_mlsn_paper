@@ -166,7 +166,7 @@ We propose the MLSN guidelines as a single soil test value to stay above for K, 
 The advantages of this approach are extensive. The guidelines can be updated with ease as new data become available. A single soil nutrient level is identified for each element -- a minimum level that we want to stay above. Thus this approach can answer the simple question, do we need to add fertilizer, or do we not need to add fertilizer? Also, we can classify soils by the SI, giving a comparison of the current soil nutrient level to the MLSN data. This MLSN approach corresponds well to the large body of turfgrass nutrition research and we look forward to rigorous testing and refinement of these values in field research. 
 
 \bibliography{citations_mlsn.bib}
-\bibliographystyle{plainnat} 
+\bibliographystyle{apalike}
 
 \section*{List of Figures and Tables}
 
