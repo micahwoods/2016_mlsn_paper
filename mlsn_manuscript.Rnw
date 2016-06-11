@@ -35,7 +35,6 @@
                               
 \usepackage{authblk} % for shwoing author affiliations
 
-% title to be 400 characters or less
 \title{Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results}
 \author[1]{Micah Woods}
 \author[2]{Larry Stowell}
@@ -61,7 +60,8 @@ source("r/read_data_and_calculate_mlsn.R")
 Soil nutrient guidelines for turfgrass are higher than necessary for the production of high quality turfgrass. Although there have been repeated calls for more soil calibration research for turfgrass, the impracticality of conducting such research for a global crop, comprised of multiple species and hundreds of cultivars, grown in a variety of soils, is evident. We studied \Sexpr{prettyNum(nPace + nAtc, big.mark = ",")} Mehlich 3 soil test results collected from good-performing turf, and then modeled a subset (n = \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")}) of those results, specifically from soils with low nutrient holding capacity, as probability distributions. From these distributions, which we take to be representative of soils in which good-performing turf is being produced, we selected the level $x$ at which the probability of a random sample $X$ being less than or equal to $x$ is 0.1. That is, we identified the level $x$ where $P(X \leq x) = 0.1$. We call these the minimum levels for sustainable nutrition (MLSN), and propose them as applicable as minimum levels for all turfgrass sites, with fertilizer recommendations made in quantities sufficient to keep each element at or above the MLSN guideline. The MLSN guidelines from data used in this paper are, for K, P, Ca, Mg, and S respectively, 37, 21, 333, 47, and 7 mg kg\textsuperscript{-1}.
 
 \vspace{0.5cm}
-keywords: turfgrass, soil test, Mehlich 3, MLSN, fertilizer
+
+\textbf{keywords:} turfgrass, soil test, Mehlich 3, MLSN, fertilizer
 
 \end{abstract}
 
@@ -91,7 +91,15 @@ In \cite{clarifying-3}, levels of K (117 mg kg\textsuperscript{-1}), Ca (751 mg 
 
 After filtering the full dataset, we were left with \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil samples -- the MLSN data. These were of moderate pH and had nutrient content in the range where fertilizer would typically be recommended using conventional guidelines. 
 
-For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a 2 parameter log-logistic (Fisk) distribution fits the K, P, Mg, and S data to a tolerable degree, and a normal distribution to the Ca data, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale and shape parameters. The MLSN guideline was selected as the value at which the probability of a random variable ($X$) drawn from this distribution having a value less than or equal to the MLSN guideline is 0.1. That is, the MLSN guideline is the value of $x$ where $P(X \leq x) = 0.1$. The scripts used to generate the MLSN guidelines are available at {\small\url{https://github.com/micahwoods/2016_mlsn_paper/tree/master/r}}.
+For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a 2 parameter log-logistic (Fisk) distribution fits the K, P, Mg, and S data to a tolerable degree, and a normal distribution to the Ca data, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale ($b$) and shape ($k$) parameters. 
+
+The quantile function $F^{-1}$ for this distribution is:
+
+\begin{equation}
+F^{-1}(p) = b \left(\frac{p}{1 - p}\right)^{1/k}, \quad p \in [0, 1) 
+\end{equation}
+
+The MLSN guideline was selected as the value at which the probability of a random variable ($X$) drawn from this distribution having a value less than or equal to the MLSN guideline is 0.1. That is, the MLSN guideline is the value of $x$ where $P(X \leq x) = 0.1$, obtained by evaluating the quantile function at $p = 0.1$. The scripts used to generate the MLSN guidelines are available at {\small\url{https://github.com/micahwoods/2016_mlsn_paper/tree/master/r}}.
 
 \section*{Results}
 
@@ -144,6 +152,10 @@ source("r/figure2.R")
 \end{figure}
 
 With these parameters in Table~\ref{tab:shapetable}, and the mean and standard deviation of the Ca data, one can compare Mehlich 3 soil test results for any turfgrass sample to the data used to generate the MLSN guidelines. We call this the sustainability index (SI), and it is the cumulative distribution function for any value of $X$. As an example, if one had test results showing Ca at 800 mg kg\textsuperscript{-1}, the SI would be \Sexpr{formatC(pnorm(800, mean(calcium), sd(calcium)), digits = 2, format = "f")}. 
+
+\begin{equation}
+F(x) = \frac{x^k}{b^k + x^k}, \quad x \in [0, \infty)
+\end{equation}
 
 The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by calculating the cumulative distribution function for $P(117 \leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}. The MLSN guideline levels are at an SI of 0.1, and the SI of all turfgrass soil test results will be in the range of 0 $\leq$ SI $\leq$ 1. Expressing these data in terms of probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
 
