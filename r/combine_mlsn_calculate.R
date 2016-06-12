@@ -13,8 +13,11 @@ mlsn.p <- mlsn(phosphorus)
 
 # for Ca
 # note that normal approximates current data better than fisk
+# for guideline pre-2016, generally worked with normal distribution
+# for Ca only, however for 2016 switch to log-logistic
 calcium <- c(pace$CaM3, atc$CaM3)
-mlsn.ca <- mlsn.normal(calcium)
+# mlsn.ca <- mlsn.normal(calcium)
+mlsn.ca <- mlsn(calcium)
 
 # for Mg
 magnesium <- c(pace$MgM3, atc$MgM3)

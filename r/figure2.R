@@ -55,7 +55,12 @@ par(mfrow=c(3,2))
 par(mar=c(5.1,4.1,4.1,2.1))
 ecdfPlot(potassium, "K (mg")
 ecdfPlot(phosphorus, "P (mg")
-normalEcdfPlot(calcium, "Ca (mg")
+
+# pre-2016 worked with normal for Ca
+# in 2016 switch to log-logistic
+# normalEcdfPlot(calcium, "Ca (mg")
+ecdfPlot(calcium, "Ca (mg")
+
 ecdfPlot(magnesium, "Mg (mg")
 ecdfPlot(sulfur, "S (mg")
 
@@ -70,9 +75,3 @@ legend("center", c("data", "MLSN model"),
        lwd = 1,
        bty = "n",
        cex = 1.5)
-
-
-
-
-
-

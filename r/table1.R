@@ -2,10 +2,7 @@
 
 kRow <- rowData(potassium)
 pRow <- rowData(phosphorus)
-caRow <- c(mlsn.normal(calcium),
-           min(calcium, na.rm = TRUE),
-           median(calcium, na.rm = TRUE),
-           max(calcium, na.rm = TRUE))
+caRow <- rowData(calcium)
 mgRow <- rowData(magnesium)
 sRow <- rowData(sulfur)
 
