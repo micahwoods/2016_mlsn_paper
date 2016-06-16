@@ -105,7 +105,7 @@ The MLSN guideline was selected as the value at which the probability of a rando
 
 Table~\ref{tab:sumtable} summarizes the combined data -- the MLSN data -- from PACE Turf and ATC (n = \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")}) after filtering to include only the samples with pH $\geq$ 5.5 and $\leq$ 8.5 and CEC $\leq$ 60 mmol\textsubscript{c} kg\textsuperscript{-1}. These samples were all from good-performing turf, yet the median value for each element is lower than the conventional guideline for that element in \cite{clarifying-3}. 
 
-<<sumtable, results='asis', echo=FALSE>>=
+<<sumtable, results='asis', echo=FALSE, warning=FALSE, error=FALSE>>=
 
 source("r/table1.R")
 
@@ -128,7 +128,7 @@ source("r/figure1.R")
 
 Table~\ref{tab:shapetable} shows the log-logistic model parameters and the $P(X \leq x) = 0.1$ level, which we identify as the MLSN guideline level. These scale and shape parameters for the log-logistic distribution can be used to find the value for any quantile. For the Ca data, we worked with a normal distribution having a mean of \Sexpr{formatC(mean(calcium), digits = 2, format = "f")} and a standard deviation of \Sexpr{formatC(sd(calcium), digits = 2, format = "f")}. Using the quantile function for a normal distribution with those parameters, the value of $x$ where $P(X \leq x) = 0.1$ is \Sexpr{formatC(qnorm(0.1, mean(calcium), sd(calcium)), digits = 0, format = "f")} mg kg\textsuperscript{-1}.
 
-<<scale_shape_table,results='asis',echo=FALSE>>=
+<<scale_shape_table,results='asis',echo=FALSE, warning=FALSE, error=FALSE>>=
 
 source("r/table2.R")
 
