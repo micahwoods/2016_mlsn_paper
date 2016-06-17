@@ -19,7 +19,7 @@ colnames(shape.table) <- c("Element", "Scale ($b$)", "Shape ($k$)", "$P(X \\leq 
 
 options(xtable.comment = FALSE)
 options(xtable.booktabs = TRUE)
-shape.table <- xtable(shape.table, caption = "Parameters of the log-logistic distributions for K, P, Ca, Mg, and S.", 
+shape.table <- xtable(shape.table, caption = "Parameters of the log-logistic distributions and the quantile function (Eq.~\ref{eq:quantile} evaluated at $p = 0.1$.", 
                       label = "tab:shapetable",
                       digits = c(0, 0, 2, 2, 0),
                       align = c("l", "l", "l", "l", "p{3cm}"))
