@@ -17,14 +17,14 @@ sim.data <- data.frame(y = rfisk(n = length(na.omit(zed)),
 # makes a plot
 
 plot(ecdf(zed), verticals=TRUE, do.p=FALSE,
-     col.h = "#d95f02",
-     col.v = "#d95f02", 
+     col.h = "red",
+     col.v = "red", 
      main = NULL, xlab = bquote(paste(.(xLabInput), ~kg^{-1}*")")),
      cex.lab = 1.5, cex.axis = 1.5, cex.main = 1.5, cex.sub = 1.5)
 
 lines(ecdf(sim.data$y), verticals = FALSE,
-      col.h = "black",
-      col.v = "black")
+      col.h = "grey",
+      col.v = "grey")
 
 }
 
@@ -70,7 +70,7 @@ plot(x = 0, y = 0, type='n', bty='n', xaxt='n', yaxt='n',
 col <- c("#d95f02", "#1b9e77")
 col2 <- adjustcolor(col, alpha.f = 0.6)
 legend("center", c("data", "MLSN model"),
-       col = c("#d95f02", "black"),
+       col = c("red", "grey"),
        lty = 1,
        lwd = 1,
        bty = "n",
