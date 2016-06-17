@@ -52,6 +52,7 @@
 <<readdata, results='hide',echo=FALSE, include=FALSE>>=
 
 source("r/read_data_and_calculate_mlsn.R")
+source("r/mmol_charge.R")
 
 @
 
@@ -67,11 +68,11 @@ Soil nutrient guidelines for turfgrass are higher than necessary for the product
 
 \section*{Introduction}
 
-High quality turfgrass is often produced in soils that conventional guidelines would identify as requiring more fertilizer. This phenomenon is due to the increased use of sand as a growing medium for high traffic turfgrass areas, combined with the development of the guidelines themselves. The guidelines for turf have been adapted from those of forage or agronomic crops \citep{clarifying-3}, and have in some cases been knowingly set high -- not because the grass requires those quantities of nutrients, but because fertilizer cost was considered a minor issue for turf \citep[p. 164]{carrow-fertility-book}.
+High quality turfgrass is often produced in soils that don't have enough nutrients to produce high quality turfgrass. That's what one finds by using conventional soil nutrient guidelines. This paradox is due to the increased use of sand as a growing medium for high traffic turfgrass areas, combined with the development of the guidelines themselves. The guidelines for turf have been adapted from those of forage or agronomic crops \citep{clarifying-3}, and have in some cases been knowingly set high -- not because the grass requires those quantities of nutrients, but because fertilizer cost was considered a minor issue for turf \citep[p. 164]{carrow-fertility-book}.
 
-These conventional guidelines, and the resultant soil test interpretations, are recognized as a problem. There have been repeated calls for more soil test calibration research, with the suggestion that a wide range of turfgrass species and cultivars, climates, and soils be tested \citep{carrow-fertility-book, Turner1992, Frank2013}. Considering the more than ten species of turfgrass in common use around the world, the many cultivars of each species, and the wide range of soils in which these grasses are grown, it seems unlikely that such calibration research will ever be conducted.
+These conventional guidelines, and the resultant soil test interpretations, are recognized as a problem. There have been repeated calls for more soil test calibration research, with the suggestion that a wide range of turfgrass species and cultivars, climates, and soils be tested \citep{Turner1992, carrow-fertility-book, Frank2013}. Considering the more than ten species of turfgrass in common use around the world, the many cultivars of each species, and the wide range of soils in which these grasses are grown, it seems unlikely that such calibration research will ever be conducted. However, if improved guidelines were available, the same turf conditions could be produced with lower nutrient inputs.
 
-We take a different approach to develop new soil test interpretation guidelines which we have called the minimum levels for sustainable nutrition (MLSN). Turf grows well in a wide range of soils. When the soil contains enough of an element, adding more of that element provides no benefit to the grass \citep{dest2001, Johnson2003, Kreuser:2012vn, Raley2013, Rowland2010, Rowland2014, Snyder2000, stjohn2003, Turner1983, woods-cs2006}. Rather than classify soils into low, medium, and high categories, or sufficiency ranges, one can simply ensure the soil remains above the level at which enough of an element is supplied to the grass. 
+We developed new soil test interpretation guidelines which we call minimum levels for sustainable nutrition (MLSN). Turf grows well in a wide range of soils. When the soil contains enough of an element, adding more of that element provides no benefit to the grass \citep{dest2001, Johnson2003, Kreuser:2012vn, Raley2013, Rowland2010, Rowland2014, Snyder2000, stjohn2003, Turner1983, woods-cs2006}. Rather than classify soils into low, medium, and high categories, or sufficiency ranges, one can ensure the soil remains above the level at which enough of an element is supplied to the grass. 
 
 To identify the minimum guideline levels, we analyzed Mehlich 3 soil test data from \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil test results, drawn from a larger set of \Sexpr{prettyNum(nPace + nAtc, big.mark = ",")} samples collected from professionally-managed and good-performing turf. This paper explains how the MLSN guidelines were identified and shows that they are applicable as a general guideline for turfgrass soil test interpretation.
 
@@ -83,17 +84,17 @@ Prior to inclusion in this dataset, PACE Turf and ATC samples were manually filt
 
 All samples were tested at Brookside Laboratories (New Bremen, Ohio). Soil pH was measured in 1:1 \ce{H2O}, and K, P, Ca, Mg, and S by inductively coupled plasma atomic emission spectroscopy (ICP-AES) after Mehlich 3 extraction \citep{mehlich1984}. 
 
-From this combined dataset of \Sexpr{prettyNum(nPace + nAtc, big.mark = ",")} samples, we selected the samples with a pH greater than or equal to 5.5 and less than or equal to 8.5. The purpose of this was to work only with samples having no aluminum toxicity on the low end and no alkalinity hazard on the high end. 
+From this combined dataset of \Sexpr{prettyNum(nPace + nAtc, big.mark = ",")} samples, we selected the samples with a pH greater than or equal to 5.5 and less than or equal to 8.5. The purpose of filtering by pH was to work only with samples having no aluminum toxicity on the low end and no alkalinity hazard on the high end. 
 
-We then selected only those samples with a cation exchange capacity (CEC) by summation \citep{Ross1995} less than or equal to 60 mmol\textsubscript{c} kg\textsuperscript{-1}. The purpose of this was to identify the samples in which the turf was performing well but the soil nutrient content was relatively low. A CEC by summation of Mehlich 3 extracted cations, in soils with a low nutrient holding capacity, such as those in common use for turfgrass sites, will usually be less that 60 mmol\textsubscript{c} kg\textsuperscript{-1} \citep{woods-dissertation, Ketterings2014}. 
+We then selected only those samples with a cation exchange capacity (CEC) by summation \citep{Ross1995} less than or equal to 60 mmol\textsubscript{c} kg\textsuperscript{-1}. The purpose of filtering by CEC was to identify the samples in which the turf was performing well in low nutrient content soil. A CEC by summation of Mehlich 3 extracted cations, in soils with a low nutrient holding capacity, such as those in common use for turfgrass sites, will usually be less that 60 mmol\textsubscript{c} kg\textsuperscript{-1} \citep{woods-dissertation, Ketterings2014}. 
 
-In \cite{clarifying-3}, levels of K (117 mg kg\textsuperscript{-1}), P (55 mg kg\textsuperscript{-1}), Ca (751 mg kg\textsuperscript{-1}), Mg (121 mg kg\textsuperscript{-1}), and S (41 mg kg/textsuperscript{-1}) are given as the bottom of the high range. The high range of \cite{clarifying-3} corresponds to \citeauthor{beegle2011}'s (\citeyear{beegle2011}) optimum range. When an element tests in the optimum range, it is considered adequate, a crop response is not expected from addition of the element, and no additions of that element are recommended for soils that are tested annually. When an element tests below the optimum range, additions of the element are expected to produce a crop response. We refer to these levels for the Mehlich 3 extractant in \cite{clarifying-3} as the conventional guidelines.
+In \cite{clarifying-3}, levels of 117 mg kg\textsuperscript{-1} for K, 55 mg kg\textsuperscript{-1} (P), 751 mg kg\textsuperscript{-1} (Ca), 121 mg kg\textsuperscript{-1} (Mg), and 41 mg kg\textsuperscript{-1} (S) are given as the bottom of the high range. The high range of \cite{clarifying-3} corresponds to \citeauthor{beegle2011}'s (\citeyear{beegle2011}) optimum range. When an element tests in the optimum range, it is considered adequate, a crop response is not expected from addition of the element, and no additions of that element are recommended for soils that are tested annually. When an element tests below the optimum range, additions of the element are expected to produce a crop response. We refer to these levels for the Mehlich 3 extractant in \cite{clarifying-3} as the conventional guidelines.
 
-A soil with K at 117 mg kg\textsuperscript{-1}, Ca at 751 mg kg\textsuperscript{-1}, and Mg at 121 mg kg\textsuperscript{-1}, has a CEC of 50 mmol\textsubscript{c} kg\textsuperscript{-1}. By selecting samples with CEC less than or equal to 60 mmol\textsubscript{c} kg\textsuperscript{-1}, we identified samples in which turf was performing well but contained nutrients in a range at which supplemental K, P, Ca, Mg, or S would typically be recommended. 
+A soil with K at 117 mg kg\textsuperscript{-1}, Ca at 751 mg kg\textsuperscript{-1}, and Mg at 121 mg kg\textsuperscript{-1}, has a CEC by summation of 50 mmol\textsubscript{c} kg\textsuperscript{-1}. By selecting samples with CEC less than or equal to 60 mmol\textsubscript{c} kg\textsuperscript{-1}, we identified samples in which turf was performing well but contained nutrients in a range at which supplemental K, P, Ca, Mg, or S would typically be recommended. 
 
 After filtering the full dataset, we were left with \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")} soil samples. These samples, which we refer to as the MLSN data, were of moderate pH and had nutrient content in the range where fertilizer would typically be recommended using conventional guidelines. 
 
-For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a 2 parameter log-logistic (Fisk) distribution fits the data to a tolerable degree, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale ($b$) and shape ($k$) parameters by maximum likelihood estimation. 
+For each of the elements of interest -- K, P, Ca, Mg, and S -- we used EasyFit software ({\small\url{www.mathwave.com}}) to evaluate a number of possible distributions for a fit to the data. Finding that a 2 parameter log-logistic (Fisk) distribution provides a reasonable fit to the data, we then used the VGAM package \citep{yee-vgam} in R \citep{r2016} to identify the scale ($b$) and shape ($k$) parameters by maximum likelihood estimation. 
 
 The cumulative distribution function for a log-logistic distribution is given by Eq.~\ref{eq:cdf}.
 
@@ -113,7 +114,7 @@ The MLSN guideline was selected as the value at which the probability of a rando
 
 \section*{Results}
 
-Table~\ref{tab:sumtable} summarizes the combined data -- the MLSN data -- from PACE Turf and ATC (n = \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")}) after filtering to include only the samples with pH $\geq$ 5.5 and $\leq$ 8.5 and CEC $\leq$ 60 mmol\textsubscript{c} kg\textsuperscript{-1}. These samples were all from good-performing turf, yet the median value for each element is lower than the conventional guideline for that element in \cite{clarifying-3}. 
+Table~\ref{tab:sumtable} summarizes the combined data -- the MLSN data -- from PACE Turf and ATC (n = \Sexpr{prettyNum(length(pace$ID) + length(atc$ID), big.mark = ",")}) after filtering to include only the samples with pH $\geq$ 5.5 and $\leq$ 8.5 and CEC $\leq$ 60 mmol\textsubscript{c} kg\textsuperscript{-1}. The median value for each element is lower than the conventional guideline for that element in \cite{clarifying-3}. Even though the turf was performing well, more than half the samples in the MLSN data are classified as requiring more K, P, Ca, Mg, and S using conventional guidelines.
 
 <<sumtable, results='asis', echo=FALSE, warning=FALSE, error=FALSE>>=
 
@@ -123,7 +124,9 @@ print(sum.table, include.rownames = FALSE, sanitize.text.function = identity,
       caption.placement = "top")
 @
 
-Figure~\ref{fig:histograms} shows histograms with overlying curves for the density, the normal distribution, and the log-logistic distribution. These MLSN data are representative of soil nutrient levels across a wide range of turfgrass sites, with soils that have a relatively low nutrient holding capacity, and at which the turfgrass was performing well at the time the sample was collected. 
+Figure~\ref{fig:histograms} shows histograms with overlying curves for the density, the normal distribution, and the log-logistic distribution. These MLSN data are representative of soil nutrient levels across a wide range of turfgrass sites, with soils that have a relatively low nutrient holding capacity, and at which the turfgrass was performing well at the time the sample was collected. The normal distribution does not represent these data well, but the log-logistic distribution does. The log-logistic distribution, for all elements except Ca, tracks closely the density of the data. 
+
+No distribution fits the Ca data well, because the ubiquity of Ca in these soils makes the Ca content largely a function of the CEC. Calcium contributed the most postive charge to the CEC in \Sexpr{prettyNum(percentCaMost, digits = 4, format = "f")}\% of the MLSN data samples. 
 
 \begin{figure}
 <<fig1, results='asis', echo=FALSE, warning=FALSE>>=
@@ -136,7 +139,7 @@ source("r/figure1.R")
 \label{fig:histograms}
 \end{figure}
 
-Table~\ref{tab:shapetable} shows the log-logistic model parameters and the $P(X \leq x) = 0.1$ level, which we identify as the MLSN guideline level. These scale and shape parameters for the log-logistic distribution can be used to find the value for any quantile. 
+Table~\ref{tab:shapetable} shows the log-logistic model parameters and the $P(X \leq x) = 0.1$ level, which we identify as the MLSN guideline level. These scale and shape parameters for the log-logistic distribution can be used to find $x$ for any $p$ using Eq.~\ref{eq:quantile}.
 
 <<scale_shape_table,results='asis',echo=FALSE, warning=FALSE, error=FALSE>>=
 
@@ -161,13 +164,20 @@ source("r/figure2.R")
 \label{fig:ecdf}
 \end{figure}
 
-With these parameters in Table~\ref{tab:shapetable}, one can compare Mehlich 3 soil test results for any turfgrass sample to the data used to generate the MLSN guidelines. We call this the sustainability index (SI), and it is 1 minus the cumulative distribution function evaluated at any value of $X$.  
+With these parameters in Table~\ref{tab:shapetable}, one can compare Mehlich 3 soil test results for any turfgrass sample to the data used to generate the MLSN guidelines. We call this compariso the sustainability index (SI), and define it for $x$ as 1 minus the cumulative distribution function (Eq.~\ref{eq:cdf}) evaluated at $x$.  
 
-The SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by calculating the cumulative distribution function for $P(117 \leq x)$ of a log-logistic distribution with values for K shown in Table~\ref{tab:shapetable}. The MLSN guideline levels are at an SI of 0.1, and the SI of all turfgrass soil test results will be in the range of 0 $\leq$ SI $\leq$ 1. Expressing these data in terms of probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
+As an example, the SI for a sample with K testing at the conventional guideline of 117 mg kg\textsuperscript{-1} is \Sexpr{formatC(siFisk(117, potassium), digits = 2, format = "f")}. We get that by evaluating the cumulative distribution function for $P(X \leq 117)$, using the parameters of the log-logistic distribution shown in Table~\ref{tab:shapetable}. The SI for soil test K of 117 is shown in Eq.~\ref{eq:siExample}.
+
+\begin{equation}
+SI = 1 - \frac{117^{3.2}}{73.48^{3.2} + 117^{3.2}} = 0.18
+\label{eq:siExample}
+\end{equation}
+
+The MLSN guideline levels are at an SI of 0.9, and the SI of all turfgrass soil test results will be in the range of 0 $\leq$ SI $\leq$ 1. Higher soil test values have a lower SI. Expressing turfgrass soil test data in terms of continuous probability distributions allows for comparison of any Mehlich 3 soil test result with the MLSN data from good-performing turf.
 
 \section*{Discussion}
 
-We summarized, in the form of probability distributions, the soil test results from a large dataset of samples collected from good-performing turf. These reference distributions of test results from good-performing turf can be used for comparison to turfgrass soil samples from any location. For each element, the MLSN guideline level were selected from the modeled probability distribution as the value $x$ at which a random sample $X$ drawn from the distribution has a value of $P(X \leq x) = 0.1$. These MLSN guideline levels are, for K, P, Ca, Mg, and S respectively: 37, 21, 333, 47, and 7 mg kg\textsuperscript{-1}. 
+We summarized, in the form of probability distributions, the soil test results from a large dataset of samples collected from good-performing turf. These reference distributions of test results from good-performing turf can be used for comparison to turfgrass soil samples from any location. For each element, the MLSN guideline level was selected from the modeled probability distribution as the value $x$ at which a random sample $X$ drawn from the distribution has a value of $P(X \leq x) = 0.1$. These MLSN guideline levels are, for K, P, Ca, Mg, and S respectively: 37, 21, 348, 47, and 7 mg kg\textsuperscript{-1}. 
 
 All the samples in the MLSN data were producing good turf at the time the sample was collected. It follows that the quantity of an element in the soil at the instant the sample was collected was sufficient to produce good turf. Soil nutrient levels decrease as grass grows and uses nutrients, so the recommended quantity of an element to apply as fertilizer, calculated so that the soil will stay above the MLSN guidelines, incorporates the expected grass use of that element over a defined duration \citep{gcm-mlsn-2014}. This results in a guideline level that is lower than the conventional guidelines of \cite{clarifying-3}, but results in fertilizer recommendations to supply elements at levels comfortably above those at which deficiency symptoms are observed \citep{Kreuser:2012vn, Raley2013, schmid2016, woods-dissertation}. 
 
@@ -192,7 +202,7 @@ The advantages of this approach are extensive. The guidelines can be updated wit
 \item Figure 1. Histograms of MLSN data with overlying density, normal, and log-logistic distributions.
 \item Figure 2. ECDF for the MLSN data and for simulated data based on the log-logistic distribution.
 \item Table 1. Summary of MLSN data, with conventional guidelines from \cite{clarifying-3} included for reference.
-\item Table 2. Parameters of the log-logistic distributions for K, P, Ca, Mg, and S.
+\item Table 2. Parameters of the log-logistic distributions and the quantile function (Eq.~\ref{eq:quantile}) evaluated at $p = 0.1$.
 \end{enumerate}
   
 \end{document}
