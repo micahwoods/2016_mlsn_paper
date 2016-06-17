@@ -15,7 +15,7 @@ elements <- c("K", "P", "Ca", "Mg", "S")
 
 shape.table <- cbind.data.frame(elements, shape.table)
 
-colnames(shape.table) <- c("Element", "Scale", "Shape", "$P(X \\leq x) = 0.1$ mg kg\\textsuperscript{-1}")
+colnames(shape.table) <- c("Element", "Scale ($b$)", "Shape ($k$)", "$P(X \\leq x) = 0.1$ mg kg\\textsuperscript{-1}")
 
 options(xtable.comment = FALSE)
 options(xtable.booktabs = TRUE)
