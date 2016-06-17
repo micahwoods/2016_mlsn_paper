@@ -34,11 +34,12 @@ shapeScale <- function(x) {
 
 # SI function for the log-logistic distribution
 # x is the test result, y is the MLSN data vector
+# update this to match previous, as 1 - the cdf
 
 siFisk <- function(x, y) {
   fit.y <- vglm(y ~ 1, fisk)
   z <- Coef(fit.y)
-  si <- pfisk(x, z[1], z[2])
+  si <- 1 - pfisk(x, z[1], z[2])
   return(si)
 }
   
