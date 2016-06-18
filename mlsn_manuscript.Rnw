@@ -36,9 +36,9 @@
 \usepackage{authblk} % for shwoing author affiliations
 
 \title{Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results}
-\author[1]{Micah Woods}
-\author[2]{Larry Stowell}
-\author[2]{Wendy Gelernter}
+\author[1]{Micah S. Woods}
+\author[2]{Larry J. Stowell}
+\author[2]{Wendy D. Gelernter}
 
 \affil[1]{Asian Turfgrass Center, Bangkok, Thailand}
 \affil[2]{PACE Turf, San Diego, California}
@@ -70,7 +70,7 @@ Conventional soil nutrient guidelines are higher than needed to produce high qua
 
 High quality turfgrass is often produced in soils that don't have enough nutrients to produce high quality turfgrass. That's the paradoxical conclusion one arrives at when using conventional soil nutrient guidelines to interpret turfgrass soil tests. There are two primary reasons for this result. One is the increased use of sand as a growing medium for high traffic turfgrass areas, and another is the development of the conventional guidelines themselves. The guidelines for turf have been adapted from those of forage or agronomic crops \citep{clarifying-3}, and have in some cases been knowingly set high -- not because the grass requires those quantities of nutrients, but because fertilizer cost was considered a minor issue for turf \citep[p. 164]{carrow-fertility-book}.
 
-These conventional guidelines, and the resultant soil test interpretations, are recognized as problematic. There have been repeated calls for more soil test calibration research across a wide range of turfgrass species and cultivars, climates, and soils \citep{Turner1992, carrow-fertility-book, Frank2013}. Considering the more than ten species of turfgrass in common use around the world, the many cultivars of each species, and the wide range of soils in which these grasses are grown, it seems unlikely that such extensive calibration research will ever be conducted. However, if improved guidelines were available, the same turf conditions could be produced with lower nutrient inputs.
+These conventional guidelines, and the resultant soil test interpretations, are recognized as problematic. There have been repeated calls for more soil test calibration research across a wide range of turfgrass species and cultivars, climates, and soils \citep{Turner1992, carrow-fertility-book, Frank2013}. Considering the more than ten species of turfgrass in common use around the world, the many cultivars of each species, and the wide range of soils in which these grasses are grown, it seems unlikely that such extensive calibration research will ever be conducted. However, if improved guidelines were available, the same turf conditions could be produced with lower nutrient inputs. Nutrient use on United States golf courses has decreased over the past decade \citep{gelernter2016} with no indication of turf performance problems.
 
 We developed new soil test interpretation guidelines which we call minimum levels for sustainable nutrition (MLSN). Turf grows well in a wide range of soils. When the soil contains enough of an element, adding more of that element provides no benefit to the grass \citep{dest2001, Johnson2003, Kreuser:2012vn, Raley2013, Rowland2010, Rowland2014, Snyder2000, stjohn2003, Turner1983, woods-cs2006}. Rather than classify soils into low, medium, and high categories, or sufficiency ranges, one can ensure the soil remains above the level at which enough of an element is supplied to the grass. 
 
