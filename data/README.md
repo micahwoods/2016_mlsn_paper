@@ -16,4 +16,4 @@ The `pace_samples.csv` file contains test results from soil samples collected to
 
 ### ATC data
 
-The `atc_samples.csv` file contains test results from soil samples collected to a 10 cm depth and submitted to ATC from March 2007 to July 2014. These samples were collected from good performing turfgrass sites in Bangladesh, Cambodia, Japan, Philippines, Sri Lanka, Thailand, and Vietnam.
+The `atc_samples.csv` file contains test results from soil samples collected to a 10 cm depth and submitted to ATC from March 2007 to July 2014. These samples were collected from good performing turfgrass sites in Bangladesh, Cambodia, Japan, Philippines, Sri Lanka, Thailand, and Vietnam. Grass species growing at these sites include *Cynodon* spp., *Paspalum vaginatum*, *Zoysia japonica*, *Zoysia matrella*, *Agrostis stolonifera*, and *Lolium perenne*.
