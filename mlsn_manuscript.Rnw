@@ -3,7 +3,7 @@
 %!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
 
-\documentclass[12pt, a4paper]{article}             
+\documentclass[12pt, a4paper, titlepage]{article}             
 
 \usepackage{booktabs}  % for pretty tables
 \usepackage{graphicx} 
@@ -33,10 +33,12 @@
 \hypersetup{colorlinks = true, urlcolor=blue,
                               citecolor = blue}         % color of external links
                               
-\usepackage{authblk} % for shwoing author affiliations
+\usepackage{authblk} % for showing author affiliations
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} % for asterisk of corresponding author
 
 \title{Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results}
-\author[1]{Micah S. Woods}
+\author[1]{Micah S. Woods\thanks{Corresponding author: Micah Woods (micah@asianturfgrass.com)}}
 \author[2]{Larry J. Stowell}
 \author[2]{Wendy D. Gelernter}
 
@@ -48,6 +50,8 @@
 \begin{document}
 
 \maketitle
+
+\renewcommand{\thefootnote}{\arabic{footnote}} % reset footnotes
 
 <<readdata, results='hide',echo=FALSE, include=FALSE>>=
 
