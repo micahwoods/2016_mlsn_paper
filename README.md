@@ -1,6 +1,6 @@
 ### The manuscript
 
-Running the `mlsn_manuscript.Rnw` file produces the paper. This is published at Peerj Preprints https://peerj.com/preprints/2144/ where you can view or download the `pdf` and leave feedback.
+Running the `mlsn_manuscript.Rnw` file produces the paper. This is published at PeerJ Preprints https://peerj.com/preprints/2144/ where you can view or download the `pdf` and leave feedback.
 
 ### Data and code 
 
