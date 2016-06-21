@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results by micahwoods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results</h1>
+      <h2 class="project-tagline">Paper, code, and data for the MLSN paper</h2>
+      <a href="https://github.com/micahwoods/2016_mlsn_paper" class="btn">View on GitHub</a>
+      <a href="https://github.com/micahwoods/2016_mlsn_paper/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/micahwoods/2016_mlsn_paper/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="you-just-want-to-read-the-paper" class="anchor" href="#you-just-want-to-read-the-paper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>You just want to read the paper?</h3>
+
+<p>You can read, download, and provide feedback on the paper, which describes why and how we developed the MLSN guidelines, at <a href="https://peerj.com/preprints/2144/">PeerJ Preprints</a>. We will submit it for peer review sometime. We are sharing what we have done so far, and hoping to get some feedback.</p>
+
+<h3>
+<a id="do-you-want-to-cite-this-preprints-are-citeable" class="anchor" href="#do-you-want-to-cite-this-preprints-are-citeable" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Do you want to cite this? <a href="http://serialmentor.com/blog/2015/1/2/what-constitutes-a-citable-scientific-work">Preprints are citeable</a>.</h3>
+
+<p>Woods MS, Stowell LJ, Gelernter WD. (2016) Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results. PeerJ Preprints 4:e2144v1 <a href="https://doi.org/10.7287/peerj.preprints.2144v1">https://doi.org/10.7287/peerj.preprints.2144v1</a></p>
+
+<h3>
+<a id="would-you-like-to-see-study-or-use-the-data" class="anchor" href="#would-you-like-to-see-study-or-use-the-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Would you like to see, study, or use the data?</h3>
+
+<p>The data we used for this project are in the <a href="https://github.com/micahwoods/2016_mlsn_paper/tree/master/data"><code>data</code> directory</a>. These data are in the public domain with no copyright. Please use them for your own projects. We certainly intend to conduct more analyses of these data in the future, and to use them as a reference dataset.</p>
+
+<h3>
+<a id="with-this-shiny-application-you-can-compare-your-data-with-the-mlsn-dataset" class="anchor" href="#with-this-shiny-application-you-can-compare-your-data-with-the-mlsn-dataset" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>With this Shiny application you can compare your data with the MLSN dataset</h3>
+
+<p>In the paper, we described the sustainability index (SI) as a way to compare any Mehlich 3 soil test result with the MLSN data. <a href="https://asianturfgrass.shinyapps.io/turfsi/">This Shiny application</a> calculates the SI based on user input soil test data.</p>
+
+<h3>
+<a id="calculation-of-the-guidelines" class="anchor" href="#calculation-of-the-guidelines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Calculation of the guidelines</h3>
+
+<p>Inspect the <a href="https://github.com/micahwoods/2016_mlsn_paper/blob/master/mlsn_manuscript.Rnw">mlsn_manuscript.Rnw</a> file and the <a href="https://github.com/micahwoods/2016_mlsn_paper/tree/master/r"><code>r</code></a> folder to see the functions and scripts that generate the guidelines.</p>
+
+<h3>
+<a id="this-paper-is-reproducible" class="anchor" href="#this-paper-is-reproducible" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>This paper is reproducible</h3>
+
+<p>This paper is completely reproducible. For more about reproducibility, the Simply Statistics blog has an excellent post on <a href="http://simplystatistics.org/2014/06/06/the-real-reason-reproducible-research-is-important/">the real reason reproducible research is important</a>. If you care about this, you'll want to read the whole post. Here's an excerpt, and it is what we have tried to do here:</p>
+
+<blockquote>
+<p>Now, just to be clear, when I use the word “reproducibility” or say that a study is reproducible, I do not mean  “independent verification” as in a separate investigator conducted an independent study and came to the same conclusion as the original study (that is what I refer to as “replication”). By using the word reproducible, I mean that the original data (and original computer code) can be analyzed (by an independent investigator) to obtain the same results of the original study. In essence, it is the notion that the <em>data analysis</em> can be successfully repeated. Reproducibility is particularly important in large computational studies where the data analysis can often play an outsized role in supporting the ultimate conclusions.</p>
+
+<p>Many people seem to conflate the ideas of reproducible and correctness, but they are not the same thing. One must always remember that <strong>a study can be reproducible and still be wrong</strong>. By “wrong”, I mean that the conclusion or claim can be wrong. If I claim that X causes Y (think “sugar causes cancer”), my data analysis might be reproducible, but my claim might ultimately be incorrect for a variety of reasons. If my claim has any value, then others will attempt to replicate it and the correctness of the claim will be determined by whether others come to similar conclusions.</p>
+
+<p>Then why is reproducibility so important? Reproducibility is important because <strong>it is the only thing that an investigator can guarantee about a study</strong>.</p>
+</blockquote>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/micahwoods/2016_mlsn_paper">Minimum soil nutrient guidelines for turfgrass developed from Mehlich 3 soil test results</a> is maintained by <a href="https://github.com/micahwoods">micahwoods</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
