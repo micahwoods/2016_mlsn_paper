@@ -1,9 +1,12 @@
 # generates an mlsn value for a vector using log logistic distribution
 mlsn <- function(x) {
-  fit.x <- vglm(x ~ 1, fisk)
+  # take log of each value in the data vector, 
+  # for purpose of getting better fit with wider range
+  forFit <- log(x)
+  fit.x <- vglm(forFit ~ 1, fisk)
   z <- Coef(fit.x)
   new.mlsn <- qfisk(0.1, z[1], z[2])
-  return(round(new.mlsn, 0))
+  return(round(exp(new.mlsn), 0))
 }
 
 # generates an mlsn value for a vector using a normal distribution
