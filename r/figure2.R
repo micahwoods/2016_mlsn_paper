@@ -4,13 +4,15 @@
 # write function to make an ECDF for an element
 # x is vector to plot, zed is the axis label
 
+# put outside function so is defined globally
+col2 <- adjustcolor("grey", alpha.f = 0.6)  
 
 ecdfPlot <- function(zed, xLabInput) {
   
 # col2 to be for the data
 # trying to make clearer distinction between data and model
   
-col2 <- adjustcolor("grey", alpha.f = 0.6)  
+
 fit.x <- vglm(zed ~ 1, fisk)
 z <- Coef(fit.x)
 
