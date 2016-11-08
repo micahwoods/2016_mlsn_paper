@@ -11,6 +11,3 @@ nPace <- length(pace$ID)
 
 # cut to get the data with desired values of pH and TEC
 pace <- filter(pace, pH >= 5.5 & pH <= 8.5 & TECM3 <= 6)
-
-# set P to be > 1, so that one can take log of the lowest samples
-pace$PM3 <- ifelse(pace$PM3 > 1, pace$PM3, pace$PM3 + 0.001)
